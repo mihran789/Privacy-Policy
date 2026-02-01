@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psrostogram - My Personal Mod</title>
+    <style>
+        /* Основные стили оформления */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #e6ebee;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Боковая панель (Список чатов) */
+        .sidebar {
+            width: 300px;
+            background-color: #ffffff;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: #0088cc;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Основное окно чата */
+        .chat-window {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); /* Стандартный фон TG */
+        }
+
+        .chat-header {
+            padding: 15px 25px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Стили сообщений */
+        .message {
+            max-width: 60%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background-color: #effdde;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Поле ввода */
+        .input-area {
+            padding: 20px;
+            background-color: #ffffff;
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0077b5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">Psrostogram</div>
+        <div class="chat-list">
+            <div class="chat-item"><b>Мама</b><br><small>Привет, как дела?</small></div>
+            <div class="chat-item"><b>Разработчик (Я)</b><br><small>Мод работает отлично!</small></div>
+            <div class="chat-item"><b>Группа Проекта</b><br><small>Обновление Psrostogram v1.0</small></div>
+        </div>
+    </div>
+
+    <div class="chat-window">
+        <div class="chat-header">Разработчик (Я)</div>
+        
+        <div class="messages-container" id="messages">
+            <div class="message received">Добро пожаловать в Psrostogram! Это твой личный мод.</div>
+            <div class="message sent">Круто, теперь я могу настраивать его как хочу!</div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Написать сообщение...">
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        // Функция для отправки сообщений
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const container = document.getElementById('messages');
+            
+            if (input.value.trim() !== "") {
+                // Создаем элемент сообщения
+                const newMessage = document.createElement('div');
+                newMessage.classList.add('message', 'sent');
+                newMessage.textContent = input.value;
+                
+                // Добавляем в контейнер
+                container.appendChild(newMessage);
+                
+                // Очищаем поле и прокручиваем вниз
+                input.value = "";
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        // Отправка по нажатию Enter
+        document.getElementById('messageInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
